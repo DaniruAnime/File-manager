@@ -37,7 +37,7 @@ namespace FileManager.Views {
     public string GetUserInput(string prompt) {
       Console.Write(prompt);
       string input = Console.ReadLine();
-      return input ?? " ";
+      return input ?? "";
     }
 
     public int GetMenuChoice() {

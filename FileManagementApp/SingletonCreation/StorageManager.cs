@@ -46,9 +46,11 @@ namespace FileManager.SingletonCreation {
 
         string name = parts[0].Trim();
         string format = parts[1].Trim();
+        string fullPath = Path.Combine(Directory.GetCurrentDirectory(), name);
 
-        if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), name))) {
-          _activeFiles.Add(new FileItem(name, " ", format));
+        if (File.Exists(fullPath)) {
+          string realContent = File.ReadAllText(fullPath);
+          _activeFiles.Add(new FileItem(name, realContent, format));
         }
       }
     }

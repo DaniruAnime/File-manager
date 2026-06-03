@@ -17,6 +17,10 @@ namespace FileManager.Controllers {
 
         int choice = _view.GetMenuChoice();
 
+        if (choice == 0) {
+          return;
+        }
+
         if (choice == 1) {
           HandleCreate();
         } else {
