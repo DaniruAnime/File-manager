@@ -36,17 +36,13 @@ namespace FileManager.Views {
 
     public string GetUserInput(string prompt) {
       Console.Write(prompt);
-      string? input = Console.ReadLine();
+      string input = Console.ReadLine();
       return input ?? "";
     }
 
     public int GetMenuChoice() {
       string input = GetUserInput("Choose action: ");
-      if (int.TryParse(input, out int choice)) {
-        return choice;
-      }
-
-      return -1;
+      return int.TryParse(input, out int choice) ? choice : -1;
     }
   }
 }

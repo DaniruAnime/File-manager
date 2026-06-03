@@ -22,11 +22,11 @@ namespace FileManager.Controllers {
 
         switch (choice) {
           case 1:
-            _view.ShowMessage("The file creation feature is not implemented");
+            new CreateFileController().Run();
             break;
 
           case 2:
-            _view.ShowMessage("The delete file feature is not implemented");
+            new DeleteFileController().Run();
             break;
 
           case 3:
