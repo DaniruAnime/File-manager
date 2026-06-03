@@ -1,22 +1,17 @@
 using System;
-using System.Collections.Generic;
-using FileManager.Models;
 using FileManager.Views;
 
 namespace FileManager.Controllers {
   public class FileController {
-    protected List<FileItem> _files;
     protected ConsoleView _view;
 
     public FileController() {
-      _files = new List<FileItem>();
       _view = new ConsoleView();
     }
 
     public virtual void Run() {
       while (true) {
-        _view.ShowFiles(_files);
-        _view.ShowMenu();
+        _view.ShowMenu(["Create file", "Delete file", "Restore file"]);
         int choice = _view.GetMenuChoice();
 
         if (choice == 0) {
@@ -24,7 +19,15 @@ namespace FileManager.Controllers {
           return;
         }
 
-        _view.ShowError("Unknown command");
+        switch (choice) {
+          case 1:
+            new CreateFileController().Run();
+            break;
+
+          default:
+            _view.ShowError("Invalid choice.");
+            break;
+        }
       }
     }
   }
