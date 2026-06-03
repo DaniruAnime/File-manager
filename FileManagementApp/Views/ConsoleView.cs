@@ -18,7 +18,6 @@ namespace FileManager.Views {
       }
 
       Console.WriteLine("\n--- ACTIVE FILES ---");
-
       for (int index = 0; index < files.Count; ++index) {
         Console.WriteLine($"{index + 1}. {files[index].Name} ({files[index].Format}) - {files[index].Content.Length} chars");
       }
@@ -36,13 +35,23 @@ namespace FileManager.Views {
 
     public string GetUserInput(string prompt) {
       Console.Write(prompt);
-      string input = Console.ReadLine();
-      return input ?? "";
+      string? input = Console.ReadLine();
+
+      if (input == null) {
+        return string.Empty;
+      } else {
+        return input;
+      }
     }
 
     public int GetMenuChoice() {
       string input = GetUserInput("Choose action: ");
-      return int.TryParse(input, out int choice) ? choice : -1;
+
+      if (int.TryParse(input, out int choice)) {
+        return choice;
+      }
+
+      return -1;
     }
   }
 }

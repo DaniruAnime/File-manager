@@ -3,8 +3,9 @@ using FileManager.Views;
 
 namespace FileManager.Controllers {
   public class FileController {
-    private readonly HistoryCaretaker _caretaker = new HistoryCaretaker();
     protected ConsoleView _view;
+
+    private readonly HistoryCaretaker _caretaker = new HistoryCaretaker();
 
     public FileController() {
       _view = new ConsoleView();
@@ -26,7 +27,7 @@ namespace FileManager.Controllers {
             break;
 
           case 2:
-            new DeleteFileController().Run();
+            new DeleteFileController(_caretaker).Run();
             break;
 
           case 3:

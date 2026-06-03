@@ -4,9 +4,11 @@ using FileManager.Models;
 namespace FileManager.Controllers {
   public class DeleteFileController : FileController {
     private readonly FileSystemFacade _facade;
+    private readonly HistoryCaretaker _caretaker;
 
-    public DeleteFileController() {
+    public DeleteFileController(HistoryCaretaker caretaker) {
       _facade = new FileSystemFacade();
+      _caretaker = caretaker;
     }
 
     public override void Run() {
@@ -14,8 +16,8 @@ namespace FileManager.Controllers {
         List<FileItem> files = _facade.GetAllFiles();
         _view.ShowFiles(files);
         _view.ShowMenu(["Delete file"]);
-
         int choice = _view.GetMenuChoice();
+
         if (choice == 0) {
           return;
         }
@@ -42,6 +44,16 @@ namespace FileManager.Controllers {
       }
 
       try {
+        // Поиск удаляемого файла среди всех активных файлов на диске
+        List<FileItem> allFiles = _facade.GetAllFiles();
+        FileItem? fileToSnapshot = allFiles.Find(file => file.Name.Equals(fileName, StringComparison.OrdinalIgnoreCase));
+
+        // Создаётся снимок текущего состояния файла и отправляется в стек истории перед физическим удалением
+        if (fileToSnapshot != null) {
+          FileMemento snapshot = new FileMemento(fileToSnapshot.Name, fileToSnapshot.Content, fileToSnapshot.Format);
+          _caretaker.Push(snapshot);
+        }
+
         _facade.DeleteFile(fileName);
         _view.ShowMessage($"File '{fileName}' deleted and moved to RecycleBin.");
       }
