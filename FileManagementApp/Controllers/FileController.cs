@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using FileManager.Models;
 using FileManager.Views;
 
@@ -16,7 +14,7 @@ namespace FileManager.Controllers {
     public virtual void Run() {
       while (true) {
         _view.ShowFiles(_files);
-        _view.ShowMenu();
+        _view.ShowMenu([]);
         int choice = _view.GetMenuChoice();
 
         if (choice == 0) {

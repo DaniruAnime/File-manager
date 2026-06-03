@@ -3,7 +3,7 @@
 namespace FileManager {
   public class Program {
     private static void Main() {
-      FileController controller = new FileController();
+      DeleteFileController controller = new DeleteFileController();
       controller.Run();
     }
   }
