@@ -416,3 +416,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Files created File Manager
+app_db.txt
+deletion_log.txt
+RecycleBin/

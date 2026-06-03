@@ -11,5 +11,15 @@ namespace FileManager.Models {
       Content = content;
       Format = format;
     }
+
+    public FileMemento SaveState() {
+      return new FileMemento(Name, Content, Format);
+    }
+
+    public void RestoreState(FileMemento memento) {
+      Name = memento.Name;
+      Content = memento.Content;
+      Format = memento.Format;
+    }
   }
 }
