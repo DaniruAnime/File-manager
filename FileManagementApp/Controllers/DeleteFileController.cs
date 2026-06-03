@@ -11,19 +11,12 @@ namespace FileManager.Controllers {
 
     public override void Run() {
       while (true) {
-        List<string> fileNames = _facade.GetAllFiles();
-        List<FileItem> files = new List<FileItem>();
-        foreach (string name in fileNames) {
-          string format = Path.GetExtension(name).TrimStart('.');
-          files.Add(new FileItem(name, " ", format));
-        }
-
+        List<FileItem> files = _facade.GetAllFiles();
         _view.ShowFiles(files);
         _view.ShowMenu(["Delete file"]);
 
         int choice = _view.GetMenuChoice();
         if (choice == 0) {
-          _view.ShowMessage("Returning to main menu.");
           return;
         }
 

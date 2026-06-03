@@ -1,4 +1,6 @@
-﻿namespace FileManager.FacadeDeletion {
+﻿using FileManager.Models;
+
+namespace FileManager.FacadeDeletion {
   public class FileSystemFacade {
     private readonly string _workDirectory;
     private readonly string _recycleBinPath;
@@ -14,15 +16,18 @@
       }
     }
 
-    public List<string> GetAllFiles() {
-      List<string> files = new List<string>();
+    public List<FileItem> GetAllFiles() {
+      List<FileItem> files = new List<FileItem>();
       string[] extensions = ["*.txt", "*.json", "*.csv"];
 
       foreach (string ext in extensions) {
         string[] found = Directory.GetFiles(_workDirectory, ext);
 
-        foreach (string file in found) {
-          files.Add(Path.GetFileName(file));
+        foreach (string filePath in found) {
+          string fileName = Path.GetFileName(filePath);
+          string format = Path.GetExtension(fileName).TrimStart('.');
+          string content = File.ReadAllText(filePath);
+          files.Add(new FileItem(fileName, content, format));
         }
       }
 
