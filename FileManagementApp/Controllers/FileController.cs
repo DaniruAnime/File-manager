@@ -1,4 +1,3 @@
-using System;
 using FileManager.Views;
 
 namespace FileManager.Controllers {
@@ -22,6 +21,10 @@ namespace FileManager.Controllers {
         switch (choice) {
           case 1:
             new CreateFileController().Run();
+            break;
+
+          case 2:
+            new DeleteFileController().Run();
             break;
 
           default:
