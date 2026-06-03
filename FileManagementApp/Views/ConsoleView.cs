@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
 using FileManager.Models;
 
 namespace FileManager.Views {
   public class ConsoleView {
-    public void ShowMenu() {
-      string menu =
-        "\n=== FILE MANAGER ===\n" +
-        "0. Exit\n";
+    public void ShowMenu(string[] options) {
+      Console.WriteLine("\n=== FILE MANAGER ===");
+      for (int index = 0; index < options.Length; ++index) {
+        Console.WriteLine($"{index + 1}. {options[index]}");
+      }
 
-      Console.WriteLine(menu);
+      Console.WriteLine("0. Exit");
     }
 
     public void ShowFiles(IReadOnlyList<FileItem> files) {
