@@ -20,6 +20,7 @@
 
       foreach (string ext in extensions) {
         string[] found = Directory.GetFiles(_workDirectory, ext);
+
         foreach (string file in found) {
           files.Add(Path.GetFileName(file));
         }
@@ -30,16 +31,19 @@
 
     public bool FileExists(string fileName) {
       string fullPath = Path.Combine(_workDirectory, fileName);
+
       return File.Exists(fullPath);
     }
 
     public void DeleteFile(string fileName) {
       string sourcePath = Path.Combine(_workDirectory, fileName);
+
       if (!File.Exists(sourcePath)) {
         throw new Exception($"File '{fileName}' not found.");
       }
 
       string destPath = Path.Combine(_recycleBinPath, fileName);
+
       if (File.Exists(destPath)) {
         string nameWithoutExt = Path.GetFileNameWithoutExtension(fileName);
         string ext = Path.GetExtension(fileName);

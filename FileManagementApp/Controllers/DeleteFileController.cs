@@ -19,37 +19,41 @@ namespace FileManager.Controllers {
         }
 
         _view.ShowFiles(files);
-
         _view.ShowMenu(["Delete file"]);
 
         int choice = _view.GetMenuChoice();
         if (choice == 0) {
-          _view.ShowMessage("Goodbye!");
+          _view.ShowMessage("Returning to main menu.");
           return;
         }
 
         if (choice == 1) {
-          string fileName = _view.GetUserInput("Enter file name to delete (with extension): ");
-          if (string.IsNullOrWhiteSpace(fileName)) {
-            _view.ShowError("File name cannot be empty.");
-            continue;
-          }
-
-          if (!_facade.FileExists(fileName)) {
-            _view.ShowError($"File '{fileName}' not found.");
-            continue;
-          }
-
-          try {
-            _facade.DeleteFile(fileName);
-            _view.ShowMessage($"File '{fileName}' deleted and moved to RecycleBin.");
-          }
-          catch (Exception ex) {
-            _view.ShowError(ex.Message);
-          }
+          HandleDelete();
         } else {
           _view.ShowError("Invalid choice.");
         }
+      }
+    }
+
+    private void HandleDelete() {
+      string fileName = _view.GetUserInput("Enter file name to delete (with extension): ");
+
+      if (string.IsNullOrWhiteSpace(fileName)) {
+        _view.ShowError("File name cannot be empty.");
+        return;
+      }
+
+      if (!_facade.FileExists(fileName)) {
+        _view.ShowError($"File '{fileName}' not found.");
+        return;
+      }
+
+      try {
+        _facade.DeleteFile(fileName);
+        _view.ShowMessage($"File '{fileName}' deleted and moved to RecycleBin.");
+      }
+      catch (Exception ex) {
+        _view.ShowError(ex.Message);
       }
     }
   }
